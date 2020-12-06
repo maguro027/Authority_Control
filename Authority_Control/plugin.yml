@@ -1,0 +1,10 @@
+name: authority_control
+version: 1.0.0
+main: authority_control.plugin.main.Core 
+default: op
+
+commands:
+
+ acs:
+  description: this is 1st sample command.
+  
