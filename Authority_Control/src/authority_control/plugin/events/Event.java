@@ -41,14 +41,13 @@ public class Event implements Listener {
 		authority_control.plugin.tool.json.Json.Join(player);
 
 		player.sendMessage("あなたの権限はLv" + authority_control.plugin.tool.json.ViewLv.getLv(player) + "です。");
-		authority_control.plugin.tool.Permission.ifFly(player);
-		authority_control.plugin.tool.Permission.ifWorldEdit(player);
+		authority_control.plugin.tool.json.Json.Update_check(player);
 
 	}
 
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent e) {
-		if (authority_control.plugin.tool.json.ViewLv.getLv(e.getPlayer()) <= BREAK_PLACE_Lv) {
+		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
 			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
 			e.setCancelled(true);
 		}
@@ -56,15 +55,15 @@ public class Event implements Listener {
 
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent e) {
-		if (authority_control.plugin.tool.json.ViewLv.getLv(e.getPlayer()) <= BREAK_PLACE_Lv) {
-			e.getPlayer().sendMessage("[ERROR ID E-02]権限がありません。");
+		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
+			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
 			e.setCancelled(true);
 		}
 	}
 
 	@EventHandler
 	public void onBAKETU_SETTI(PlayerBucketEmptyEvent e) {
-		if (authority_control.plugin.tool.json.ViewLv.getLv(e.getPlayer()) <= BREAK_PLACE_Lv) {
+		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
 			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
 			e.setCancelled(true);
 		}
@@ -72,7 +71,7 @@ public class Event implements Listener {
 
 	@EventHandler
 	public void onBAKETU_SETTI(PlayerBucketFillEvent e) {
-		if (authority_control.plugin.tool.json.ViewLv.getLv(e.getPlayer()) <= BREAK_PLACE_Lv) {
+		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
 			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
 			e.setCancelled(true);
 		}
@@ -105,15 +104,13 @@ public class Event implements Listener {
 
 		} else if (com.contains("/gamemode")) {
 
-			if (authority_control.plugin.tool.json.ViewLv.getLv(player) <= CHANGE_GAMEMODE_Lv) {
+			if (e.getPlayer().hasPermission("waterpunch.change_gamemode")) {
 				e.setCancelled(true);
 
 				player.sendMessage("[ERROR ID E-03]権限がありません。");
 				player.setGameMode(GameMode.SURVIVAL);
 
 				System.out.println("権限がないゲームモードの変更をブロックしました。");
-
-			} else {
 
 			}
 

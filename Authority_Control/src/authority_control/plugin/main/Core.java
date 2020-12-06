@@ -17,6 +17,7 @@ public class Core extends JavaPlugin {
 		new Event(this);
 		authority_control.plugin.tool.meta.Meta.Player_metaEXP(this);
 		authority_control.plugin.tool.Permission.Permission_plugin(this);
+		authority_control.plugin.tool.json.Json.Json_plugin(this);
 
 		System.out.println("Authority_Control Start Power WP ");//Enadle
 		authority_control.plugin.main.Option.roadOption();
@@ -26,7 +27,7 @@ public class Core extends JavaPlugin {
 	public void onDisable() {
 		System.out.println("Authority_Control Stop");//Disable
 	}
-	
+
 
 
 	@SuppressWarnings("deprecation")
@@ -111,7 +112,7 @@ public class Core extends JavaPlugin {
 	void message(int errID) {
 
 	}
-	
-	
+
+
 
 }

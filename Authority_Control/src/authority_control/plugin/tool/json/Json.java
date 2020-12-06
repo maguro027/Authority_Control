@@ -18,6 +18,7 @@ import java.util.UUID;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,6 +28,11 @@ import com.google.gson.stream.JsonReader;
 import authority_control.plugin.tool.meta.Meta;
 
 public class Json {
+	static Plugin plugin;
+
+	public static void Json_plugin(Plugin plugindata) {
+		plugin = plugindata;
+	}
 
 	@SuppressWarnings("unchecked")
 	public static void Join(Player p) {
@@ -118,6 +124,10 @@ public class Json {
 			}
 		}
 
+		if (authority_control.plugin.tool.json.ViewLv.getLv(p) >= authority_control.plugin.events.Event
+				.getWorldEdit_Lv())
+			p.addAttachment(plugin, "worldedit.*", true);
+
 		Meta pmeta = new Meta(p);
 
 		pmeta.setLevel(level);
@@ -187,12 +197,14 @@ public class Json {
 	}
 
 	public static void Update_check(Player player) {
-		
+
 		authority_control.plugin.tool.Permission.ifFly(player);
 		authority_control.plugin.tool.Permission.ifWorldEdit(player);
-		
+		authority_control.plugin.tool.Permission.ifBREAK_PLACE(player);
+		authority_control.plugin.tool.Permission.ifCHANGE_GAMEMODE(player);
+
 	}
-	
+
 	public static void Update(CommandSender sender, Player player, int level) {
 
 		if (sender.isOp()) {
@@ -292,8 +304,6 @@ public class Json {
 						System.out.println(player_name + "の権限を変更しました[Level:" + lowlevel + "→Level:" +
 								level + "]");
 
-						
-						
 					} catch (IOException e) {
 
 						e.printStackTrace();
