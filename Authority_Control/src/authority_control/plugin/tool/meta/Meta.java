@@ -18,6 +18,7 @@ public class Meta {
 	private final static String DATA_KEY = "M.";
 	private final static String LEVEL = "AUTHORITY_LEVEL.";
 	private final static String MEMO = "AUTHORITY_MEMO.";
+	private final static String ONETIMEKEY = "AUTHORITY_ONETIMEKEY.";
 
 	public Meta(Player player) {
 		this.player = player;
@@ -57,6 +58,20 @@ public class Meta {
 		}
 	}
 
+	public void updatePlayermemo(String str) {
+		player.removeMetadata(
+				MEMO, // key
+				plugin // プラグイン
+		);
+		player.setMetadata(
+				MEMO, // key
+				new FixedMetadataValue(
+						plugin, // プラグイン
+						str // 設定したい値
+				));
+	}
+
+
 	public void updatePlayerlavel() {
 		player.removeMetadata(
 				LEVEL, // key
@@ -67,6 +82,19 @@ public class Meta {
 				new FixedMetadataValue(
 						plugin, // プラグイン
 						level // 設定したい値
+				));
+	}
+
+	public void setOnetime(int i) {
+		player.removeMetadata(
+				ONETIMEKEY, // key
+				plugin // プラグイン
+		);
+		player.setMetadata(
+				ONETIMEKEY, // key
+				new FixedMetadataValue(
+						plugin, // プラグイン
+						i // 設定したい値
 				));
 	}
 }

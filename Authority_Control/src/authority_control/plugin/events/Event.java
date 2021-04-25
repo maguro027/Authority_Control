@@ -1,12 +1,16 @@
 package authority_control.plugin.events;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -17,13 +21,13 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class Event implements Listener {
 
 	public Event(Plugin plugin) {
-		// ここで登録している
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
@@ -32,6 +36,19 @@ public class Event implements Listener {
 	static int WorldEdit_Lv;
 	static int CHANGE_GAMEMODE_Lv;
 	static int setFIRST_SPAWNPOINTMODE_Lv_Lv;
+
+	@EventHandler
+	public void onBlockBurnEvent(BlockBurnEvent e) {
+		e.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onBlockIgniteEvent(BlockIgniteEvent e) {
+		e.setCancelled(true);
+		if (e.getBlock().getType().equals(Material.FIRE)) {
+			e.setCancelled(true);
+		}
+	}
 
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent p) {
@@ -104,7 +121,7 @@ public class Event implements Listener {
 
 		} else if (com.contains("/gamemode")) {
 
-			if (e.getPlayer().hasPermission("waterpunch.change_gamemode")) {
+			if (!(e.getPlayer().hasPermission("waterpunch.change_gamemode"))) {
 				e.setCancelled(true);
 
 				player.sendMessage("[ERROR ID E-03]権限がありません。");
@@ -170,19 +187,46 @@ public class Event implements Listener {
 		return setFIRST_SPAWNPOINTMODE_Lv_Lv;
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
-		@SuppressWarnings("deprecation")
 		ItemStack hand = event.getPlayer().getItemInHand();
 		Player player = event.getPlayer();
 
-		if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		Action ac = event.getAction();
 
-			if (hand.getType() == Material.RAW_FISH) {
-				authority_control.plugin.tool.inventory.Menus.setMenu(player);
+		if (event.getHand() == EquipmentSlot.HAND && !(event.getClickedBlock() == null)) {
+			if (!(event.getClickedBlock().getType() == Material.AIR)) {
+
+				Block block = event.getClickedBlock();
+
+				if (hand.getType() == Material.RAW_FISH && ac == Action.LEFT_CLICK_BLOCK) {
+					event.setCancelled(true);
+					authority_control.plugin.tool.inventory.Menus.setMenu(player);
+				}
+				if (player.hasPermission("waterpunch.break_place")) {
+					player.sendMessage("[ERROR ID E-01]権限がありません。");
+					event.setCancelled(true);
+				} else {
+
+					if (hand.getType() == Material.STICK && ac == Action.LEFT_CLICK_BLOCK) {
+						event.setCancelled(true);
+
+						block.setData((byte) (block.getData() - 1));
+					} else if (hand.getType() == Material.STICK && ac == Action.RIGHT_CLICK_BLOCK) {
+						event.setCancelled(true);
+
+						block.setData((byte) (block.getData() + 1));
+					}
+				}
 			}
 		}
+	}
 
+	@SuppressWarnings("deprecation")
+	public void blockdata(int i, Location loc, Player player) {
+		loc.getBlock().setData((byte) (loc.getBlock().getData() + 1));
+		player.sendMessage("ID" + loc.getBlock().getData());
 	}
 
 	@EventHandler

@@ -41,7 +41,7 @@ public class Json {
 		UUID uuid = null;
 
 		Gson gson = new Gson();
-		User user = new User(p.getUniqueId().toString(), p.getName(), level);
+		User user = new User(p.getUniqueId().toString(), p.getName(), level, null);
 
 		//		String jstr = gson.toJson(user, user.getClass());
 		//		System.out.println(jstr);
@@ -218,13 +218,10 @@ public class Json {
 			try (Writer writer = new FileWriter(URL)) {
 
 				Gson gson = new Gson();
-				User user = new User(player.getUniqueId().toString(), player.getName(), level);
+				User user = new User(player.getUniqueId().toString(), player.getName(), level, null);
 
 				gson = new GsonBuilder().create();
 				gson.toJson(user, writer);
-
-				//			System.out.println(user.toString());
-				//			System.out.println("/////////////////////////");
 
 				Meta pmeta = new Meta(player);
 				pmeta.setLevel(level);
@@ -290,7 +287,7 @@ public class Json {
 					try (Writer writer = new FileWriter(URL)) {
 
 						Gson gson = new Gson();
-						User user = new User(uid, player_name, level);
+						User user = new User(uid, player_name, level, null);
 
 						gson = new GsonBuilder().create();
 						gson.toJson(user, writer);

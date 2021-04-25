@@ -5,15 +5,16 @@ public class User {
 	private String uuid; // uuID
 	private String name; // ユーザ名
 	private int level;//権限レベル
+	private String memo;//memo
 
 	public User() {
 	}
 
-	public User(String uuid, String name, int level) {
+	public User(String uuid, String name, int level, String memo) {
 		this.uuid = uuid;
 		this.name = name;
 		this.level = level;
-
+		this.memo = memo;
 	}
 
 	public String getId() {
@@ -28,6 +29,10 @@ public class User {
 		return level;
 	}
 
+	public String getMemo() {
+		return memo;
+	}
+
 	public void setUuid(String uuid) {//
 		this.uuid = uuid;
 	}
@@ -40,7 +45,11 @@ public class User {
 		this.level = level;
 	}
 
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
 	public String toString() {
-		return "ID=" + uuid + ", NAME=" + name + ", LEVEL=" + level;
+		return "ID=" + uuid + ", NAME=" + name + ", LEVEL=" + level + ", MEMO=" + memo;
 	}
 }
