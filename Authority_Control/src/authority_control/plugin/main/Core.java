@@ -23,7 +23,7 @@ public class Core extends JavaPlugin {
 		authority_control.plugin.tool.Permission.Permission_plugin(this);
 		authority_control.plugin.tool.json.Json.Json_plugin(this);
 
-		System.out.println("Authority_Control Start Power WP ");//Enadle
+		System.out.println("Authority_Control Start Power by WP ");//Enadle
 
 		authority_control.plugin.main.Option.roadOption();
 	}
@@ -33,7 +33,7 @@ public class Core extends JavaPlugin {
 		System.out.println("Authority_Control Stop");//Disable
 	}
 
-	@SuppressWarnings({ "deprecation" })
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 
@@ -96,6 +96,7 @@ public class Core extends JavaPlugin {
 					}
 
 				}
+
 				if (args[0].equalsIgnoreCase("help")) {
 
 					sender.sendMessage(ChatColor.YELLOW + "--------------------------------------");
@@ -114,29 +115,24 @@ public class Core extends JavaPlugin {
 						if (args.length == 3 && Pattern.compile("^-?[0-9]+$").matcher(args[2]).find()) {
 
 							int level = 0;
-
 							try {
 								level = Integer.parseInt(args[2]);
-
 								authority_control.plugin.tool.json.Json.Update(sender, args[1], level);
-
 							} catch (NumberFormatException e) {
-
 								sender.sendMessage("権限値が巨大すぎます。");
-
 							}
-
 						} else {
 							sender.sendMessage("/acs set [ターゲット] [新しい権限値]");
 						}
 					}
 				}
 
-				if (sender instanceof Player) {//PlayerOnly
-					if (cmd.getName().equalsIgnoreCase("menu")) {
+				if (args[0].equalsIgnoreCase("menu")) {
+					if (sender instanceof Player) {//PlayerOnly
 						authority_control.plugin.tool.inventory.Menus.setMenu((Player) sender);
 					}
 				}
+
 			}
 		}
 		return false;
@@ -163,7 +159,6 @@ public class Core extends JavaPlugin {
 			}
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("optionset")) {
-				@SuppressWarnings("deprecation")
 				Player target = getServer().getPlayerExact(sender.getName());
 				int onetimekey = (int) (Math.random() * 999999);
 

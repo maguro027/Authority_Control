@@ -1,28 +1,23 @@
 package authority_control.plugin.events;
 
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class Event implements Listener {
@@ -35,7 +30,8 @@ public class Event implements Listener {
 	static int FLY_Lv;
 	static int WorldEdit_Lv;
 	static int CHANGE_GAMEMODE_Lv;
-	static int setFIRST_SPAWNPOINTMODE_Lv_Lv;
+	static int TP_Lv;
+	static int setFIRST_SPAWNPOINTMODE_Lv;
 
 	@EventHandler
 	public void onBlockBurnEvent(BlockBurnEvent e) {
@@ -64,33 +60,49 @@ public class Event implements Listener {
 
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent e) {
-		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
-			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
+		if (!(e.getPlayer().hasPermission("waterpunch.break_place"))) {
 			e.setCancelled(true);
+			authority_control.plugin.main.Error_System.sendPlayer(e.getPlayer(), 1);
+
 		}
 	}
 
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent e) {
-		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
-			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
+		if (!(e.getPlayer().hasPermission("waterpunch.break_place"))) {
 			e.setCancelled(true);
+			authority_control.plugin.main.Error_System.sendPlayer(e.getPlayer(), 1);
+
 		}
 	}
 
 	@EventHandler
 	public void onBAKETU_SETTI(PlayerBucketEmptyEvent e) {
-		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
-			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
+		if (!(e.getPlayer().hasPermission("waterpunch.break_place"))) {
 			e.setCancelled(true);
+			authority_control.plugin.main.Error_System.sendPlayer(e.getPlayer(), 1);
+
 		}
 	}
 
 	@EventHandler
 	public void onBAKETU_SETTI(PlayerBucketFillEvent e) {
-		if (e.getPlayer().hasPermission("waterpunch.break_place")) {
-			e.getPlayer().sendMessage("[ERROR ID E-01]権限がありません。");
+		if (!(e.getPlayer().hasPermission("waterpunch.break_place"))) {
 			e.setCancelled(true);
+			authority_control.plugin.main.Error_System.sendPlayer(e.getPlayer(), 1);
+
+		}
+	}
+
+	@EventHandler
+	public void onLaunch(ProjectileLaunchEvent e) {
+
+		if (e.getEntity().getShooter() instanceof Player) {
+			Player player = (Player) e.getEntity().getShooter();
+			if (!(player.hasPermission("waterpunch.break_place"))) {
+				e.setCancelled(true);
+				authority_control.plugin.main.Error_System.sendPlayer(player, 1);
+			}
 		}
 	}
 
@@ -114,25 +126,19 @@ public class Event implements Listener {
 
 			if (authority_control.plugin.tool.json.ViewLv.getLv(player) <= WorldEdit_Lv) {
 				e.setCancelled(true);
-
-				player.sendMessage("[ERROR ID E-04]権限がありません。");
-
+				authority_control.plugin.main.Error_System.sendPlayer(e.getPlayer(), 3);
+				;
 			}
 
 		} else if (com.contains("/gamemode")) {
 
 			if (!(e.getPlayer().hasPermission("waterpunch.change_gamemode"))) {
 				e.setCancelled(true);
-
-				player.sendMessage("[ERROR ID E-03]権限がありません。");
-				player.setGameMode(GameMode.SURVIVAL);
-
-				System.out.println("権限がないゲームモードの変更をブロックしました。");
-
+				authority_control.plugin.main.Error_System.sendPlayer(e.getPlayer(), 2);
 			}
 
 		} else if (com.contains("/tp")) {
-
+			e.setCancelled(false);
 		}
 
 	}
@@ -157,14 +163,19 @@ public class Event implements Listener {
 		System.out.println("ゲームモード使用権限=" + CHANGE_GAMEMODE_Lv);
 	}
 
+	static public void setTP_Lv(int i) {
+		TP_Lv = i;
+		System.out.println("TP使用権限=" + TP_Lv);
+	}
+
 	static public int setFIRST_SPAWNPOINTMODE_Lv(int i) {
 		String txt = "無効";
-		setFIRST_SPAWNPOINTMODE_Lv_Lv = i;
-		if (setFIRST_SPAWNPOINTMODE_Lv_Lv == 1)
+		setFIRST_SPAWNPOINTMODE_Lv = i;
+		if (setFIRST_SPAWNPOINTMODE_Lv == 1)
 			txt = "有効";
 
 		System.out.println("ログイン位置固定(0以外で有効)= " + txt);
-		return setFIRST_SPAWNPOINTMODE_Lv_Lv;
+		return setFIRST_SPAWNPOINTMODE_Lv;
 	}
 
 	static public int getBlockEvent_Lv() {
@@ -184,58 +195,31 @@ public class Event implements Listener {
 	}
 
 	static public int getTP_Lv() {
-		return setFIRST_SPAWNPOINTMODE_Lv_Lv;
+		return TP_Lv;
 	}
 
-	@SuppressWarnings("deprecation")
-	@EventHandler
-	public void onPlayerInteractEvent(PlayerInteractEvent event) {
-		ItemStack hand = event.getPlayer().getItemInHand();
-		Player player = event.getPlayer();
-
-		Action ac = event.getAction();
-
-		if (event.getHand() == EquipmentSlot.HAND && !(event.getClickedBlock() == null)) {
-			if (!(event.getClickedBlock().getType() == Material.AIR)) {
-
-				Block block = event.getClickedBlock();
-
-				if (hand.getType() == Material.RAW_FISH && ac == Action.LEFT_CLICK_BLOCK) {
-					event.setCancelled(true);
-					authority_control.plugin.tool.inventory.Menus.setMenu(player);
-				}
-				if (player.hasPermission("waterpunch.break_place")) {
-					player.sendMessage("[ERROR ID E-01]権限がありません。");
-					event.setCancelled(true);
-				} else {
-
-					if (hand.getType() == Material.STICK && ac == Action.LEFT_CLICK_BLOCK) {
-						event.setCancelled(true);
-
-						block.setData((byte) (block.getData() - 1));
-					} else if (hand.getType() == Material.STICK && ac == Action.RIGHT_CLICK_BLOCK) {
-						event.setCancelled(true);
-
-						block.setData((byte) (block.getData() + 1));
-					}
-				}
-			}
-		}
+	static public int getFIRST_SPAWNPOINTMODE_Lv() {
+		return setFIRST_SPAWNPOINTMODE_Lv;
 	}
 
-	@SuppressWarnings("deprecation")
-	public void blockdata(int i, Location loc, Player player) {
-		loc.getBlock().setData((byte) (loc.getBlock().getData() + 1));
-		player.sendMessage("ID" + loc.getBlock().getData());
-	}
+		@SuppressWarnings("deprecation")
+		@EventHandler
+		public void onPlayerInteractEvent(PlayerInteractEvent e) {
+//			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getItemMeta().get) {
+//
+//				e.getPlayer().sendMessage("a");
+//
+//			}
 
-	@EventHandler
-	public void onPlayerItemConsumeEvent(PlayerItemConsumeEvent event) {
-
-		if (event.getItem().getType() == Material.RAW_FISH) {
-			event.setCancelled(true);
 		}
 
+	@EventHandler
+	public void onPlayerDropItemEvent(PlayerDropItemEvent e) {
+		Player player = e.getPlayer();
+		if (player.hasPermission("waterpunch.break_place")) {
+			player.sendMessage("[ERROR ID E-01]権限がありません。");
+			e.setCancelled(true);
+		}
 	}
 
 	@EventHandler
@@ -268,5 +252,4 @@ public class Event implements Listener {
 			}
 		}
 	}
-
 }

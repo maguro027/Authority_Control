@@ -49,6 +49,7 @@ public class Option {
 		int FLY = 0;
 		int WORLDEDIT = 0;
 		int CHANGE_GAMEMODE = 0;
+		int TP = 0;
 		int UPDATE_FIRSTSPAWNPOINT = 0;
 
 		String relativePath = "";
@@ -78,6 +79,10 @@ public class Option {
 				FLY = (int) i;
 				authority_control.plugin.events.Event.setFLY_Lv(FLY);
 
+				i = map.get("TP");
+				TP = (int) i;
+				authority_control.plugin.events.Event.setTP_Lv(TP);
+
 				i = map.get("WORLDEDIT");
 				WORLDEDIT = (int) i;
 				authority_control.plugin.events.Event.setWorldEdit_Lv(WORLDEDIT);
@@ -103,7 +108,8 @@ public class Option {
 						opti.setWORLDEDIT(authority_control.plugin.events.Event.getWorldEdit_Lv());
 						opti.setCHANGE_GAMEMODE(authority_control.plugin.events.Event.getCHANGE_GAMEMODE_Lv());
 						opti.setFLY(authority_control.plugin.events.Event.getFLY_Lv());
-						opti.setFIRSTSPAWNPOINTMODE(authority_control.plugin.events.Event.getTP_Lv());
+						opti.setTP(authority_control.plugin.events.Event.getTP_Lv());
+						opti.setFIRSTSPAWNPOINTMODE(authority_control.plugin.events.Event.getFIRST_SPAWNPOINTMODE_Lv());
 
 						ggson = new GsonBuilder().create();
 						ggson.toJson(opti, writer);

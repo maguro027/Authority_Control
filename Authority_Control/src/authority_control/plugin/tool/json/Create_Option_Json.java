@@ -6,6 +6,7 @@ public class Create_Option_Json {
 	private int FLY;
 	private int WORLDEDIT;
 	private int CHANGE_GAMEMODE;
+	private int TP;
 	private int FIRST_SPAWNPOINTMODE;
 
 	public Create_Option_Json(int i) {
@@ -15,6 +16,7 @@ public class Create_Option_Json {
 		this.FLY = 1;
 		this.WORLDEDIT = 1;
 		this.CHANGE_GAMEMODE = 1;
+		this.TP = 1;
 		this.FIRST_SPAWNPOINTMODE = 0;
 
 	}
@@ -35,13 +37,17 @@ public class Create_Option_Json {
 		this.CHANGE_GAMEMODE = i;
 	}
 
+	public void setTP(int i) {
+		this.TP = i;
+	}
+
 	public void setFIRSTSPAWNPOINTMODE(int i) {
 		this.FIRST_SPAWNPOINTMODE = i;
 	}
 
 	public String OPString() {
 		return "BREAK_PLACE=" + BREAK_PLACE + ", FLY=" + FLY + ", WORLDEDIT=" + WORLDEDIT + ", CHANGE_GAMEMODE="
-				+ CHANGE_GAMEMODE + ", FIRST_SPAWNPOINTMODE=" + FIRST_SPAWNPOINTMODE;
+				+ CHANGE_GAMEMODE + ", TP=" + TP + ", FIRST_SPAWNPOINTMODE=" + FIRST_SPAWNPOINTMODE;
 
 	}
 }

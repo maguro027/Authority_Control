@@ -37,7 +37,7 @@ public class Menus {
 		im.setDisplayName(name);
 		Beacon.setItemMeta(im);
 
-		ItemStack Glass = new ItemStack(Material.STAINED_GLASS_PANE, 1);
+		ItemStack Glass = new ItemStack(Material.GLASS_PANE, 1);
 		ItemMeta Glassact = Glass.getItemMeta();
 		String Glassname = " ";
 		Glassact.setDisplayName(Glassname);
@@ -84,7 +84,7 @@ public class Menus {
 		im.setLore(lores);
 		Beacon.setItemMeta(im);
 
-		ItemStack Glass = new ItemStack(Material.STAINED_GLASS_PANE, 1);
+		ItemStack Glass = new ItemStack(Material.GLASS_PANE, 1);
 		ItemMeta Glassact = Glass.getItemMeta();
 		String Glassname = " ";
 		Glassact.setDisplayName(Glassname);
@@ -96,13 +96,13 @@ public class Menus {
 		Creativeact.setDisplayName(Creativename);
 		Creative.setItemMeta(Creativeact);
 
-		ItemStack Survival = new ItemStack(Material.WOOD_AXE, 1);
+		ItemStack Survival = new ItemStack(Material.WOODEN_AXE, 1);
 		ItemMeta Survivalact = Survival.getItemMeta();
 		String Survivalname = "Survival";
 		Survivalact.setDisplayName(Survivalname);
 		Survival.setItemMeta(Survivalact);
 
-		ItemStack Adventure = new ItemStack(Material.GOLD_AXE, 1);
+		ItemStack Adventure = new ItemStack(Material.GOLDEN_AXE, 1);
 		ItemMeta Adventureact = Adventure.getItemMeta();
 		String Adventurename = "Adventure";
 		Adventureact.setDisplayName(Adventurename);
@@ -204,7 +204,7 @@ public class Menus {
 		lores.add("各種プレーヤー毎に付与された");
 		lores.add("権限レベルを編集できます。");
 
-		ItemStack REDTORCH = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
+		ItemStack REDTORCH = new ItemStack(Material.REDSTONE_TORCH, 1);
 		ItemMeta im = REDTORCH.getItemMeta();
 		String name = "プレーヤー権限設定";
 		im.setDisplayName(name);
@@ -215,7 +215,7 @@ public class Menus {
 		lores1.add("警告");
 		lores1.add("サーバー全体の権限を編集します。");
 
-		ItemStack WORKBENCH = new ItemStack(Material.WORKBENCH, 1);
+		ItemStack WORKBENCH = new ItemStack(Material.BEACON, 1);
 		ItemMeta mim = WORKBENCH.getItemMeta();
 		String mname = "サーバー権限設定";
 		mim.setDisplayName(mname);
@@ -226,14 +226,14 @@ public class Menus {
 		lores2.add("警告");
 		lores2.add("初回ログインのユーザーのスポーン場所を現在地に変更します。");
 
-		ItemStack FIRSTSPAWN = new ItemStack(Material.EYE_OF_ENDER, 1);
+		ItemStack FIRSTSPAWN = new ItemStack(Material.ENDER_EYE, 1);
 		ItemMeta FIRSTSPAWN_ = FIRSTSPAWN.getItemMeta();
 		String FIRSTSPAWN_NAME = "初回スポーン場所変更";
 		FIRSTSPAWN_.setDisplayName(FIRSTSPAWN_NAME);
 		FIRSTSPAWN_.setLore(lores2);
 		FIRSTSPAWN.setItemMeta(FIRSTSPAWN_);
 
-		ItemStack Glass = new ItemStack(Material.STAINED_GLASS_PANE, 1);
+		ItemStack Glass = new ItemStack(Material.GLASS_PANE, 1);
 		ItemMeta Glassact = Glass.getItemMeta();
 		String Glassname = " ";
 		Glassact.setDisplayName(Glassname);

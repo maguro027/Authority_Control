@@ -10,12 +10,15 @@ public class Permission {
 		plugin = plugindata;
 	}
 
-
 	public static void ifBREAK_PLACE(Player player) {
-		if (authority_control.plugin.tool.json.ViewLv.getLv(player) <= authority_control.plugin.events.Event
+		if (authority_control.plugin.tool.json.ViewLv.getLv(player) >= authority_control.plugin.events.Event
 				.getBlockEvent_Lv()) {
+
+			player.addAttachment(plugin, "minecraft.debugstick", true);
 			player.addAttachment(plugin, "waterpunch.break_place", true);
+
 		} else {
+			player.addAttachment(plugin, "minecraft.debugstick.always", false);
 			player.addAttachment(plugin, "waterpunch.break_place", false);
 		}
 	}
@@ -37,6 +40,22 @@ public class Permission {
 		} else {
 			player.addAttachment(plugin, "waterpunch.fly", false);
 			player.setAllowFlight(false);
+		}
+
+	}
+
+	public static void ifTp(Player player) {
+		if (authority_control.plugin.tool.json.ViewLv.getLv(player) >= authority_control.plugin.events.Event
+				.getTP_Lv()) {
+
+			player.addAttachment(plugin, "minecraft.command.tp", true);
+			player.addAttachment(plugin, "worldedit.tp", true);
+
+		} else {
+
+			player.addAttachment(plugin, "minecraft.command.tp", false);
+			player.addAttachment(plugin, "worldedit.tp", false);
+
 		}
 
 	}
